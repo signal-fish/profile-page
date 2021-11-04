@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { updateUser } from "../../redux/userSlice";
+import { update } from "../../redux/userSlice";
 
 const Update = () => {
   const [name, setName] = useState("");
@@ -10,10 +10,10 @@ const Update = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  const handleClick = (e) => {
-    e.preventDefault();
-    dispatch(updateUser({ name, email }));
-  };
+  const handleUpdate = (e) => {
+    e.preventDefault()
+    dispatch(update({name, email}))
+  }
   return (
     <Container>
       <Wrapper>
@@ -31,7 +31,7 @@ const Update = () => {
               <Label>Username</Label>
               <Input
                 type="text"
-                placeholder={user.userInfo.name}
+                placeholder={user.name}
                 onChange={(e) => setName(e.target.value)}
               />
             </FormItem>
@@ -39,14 +39,14 @@ const Update = () => {
               <Label>Email</Label>
               <Input
                 type="text"
-                placeholder={user.userInfo.email}
+                placeholder={user.email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </FormItem>
             <FormItem>
               <Label>Password</Label>
               <Input type="password" />
-              <UpdateButton disabled={user.pending} onClick={handleClick}>
+              <UpdateButton disabled={user.pending} onClick={handleUpdate}>
                 Update
               </UpdateButton>
               {user.error && (<Error>Something went wrong!</Error>)()}

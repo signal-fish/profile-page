@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 
 const MenuLink = ({ icon, text }) => {
-  const name = useSelector((state) => state.user.userInfo.name);
+  const name = useSelector((state) => state.user.name);
 
   return (
     <Container>
