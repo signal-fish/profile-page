@@ -1,17 +1,20 @@
-import styled from "styled-components"
+import styled from "styled-components";
+import { useSelector } from "react-redux";
 
-const MenuLink = ({ icon, text}) => {
+const MenuLink = ({ icon, text }) => {
+  const name = useSelector((state) => state.user.userInfo.name);
+
   return (
     <Container>
       {icon}
       <Text>{text}</Text>
-      <TextName>{text === "Logout" && "( Fish )"}</TextName>
+      <TextName>{text === "Logout" && `(${name})`}</TextName>
     </Container>
   );
-}
+};
 
 const Container = styled.div`
-width: calc(100% - 10px);
+  width: calc(100% - 10px);
   padding: 10px 10px 10px 20px;
   border-radius: 5px;
   display: flex;
@@ -29,6 +32,6 @@ const Text = styled.span`
   margin-right: 5px;
 `;
 
-const TextName = styled.span``
+const TextName = styled.span``;
 
-export default MenuLink
+export default MenuLink;

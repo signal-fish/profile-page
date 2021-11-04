@@ -1,7 +1,10 @@
 import styled from "styled-components";
 import { ArrowDropDown } from "@material-ui/icons";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
+  const name = useSelector((state) => state.user.userInfo.name);
+  
   return (
     <Container>
       <Wrapper>
@@ -10,7 +13,7 @@ const Navbar = () => {
         </Left>
         <Right>
           <Image src="assets/signal-fish.jpg" />
-          <Name>Signal Fish</Name>
+          <Name>{name}</Name>
           <ArrowDropDown />
         </Right>
       </Wrapper>

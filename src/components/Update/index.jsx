@@ -1,13 +1,23 @@
+import { useState } from "react";
 import styled from "styled-components";
-import Warning from "../Warning";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { updateUser } from "../../redux/userSlice";
 
 const Update = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    dispatch(updateUser({ name, email }));
+  };
   return (
     <Container>
       <Wrapper>
         <Title>Update Your Account</Title>
-        <Warning />
-        <DeleteButton>Delete Account</DeleteButton>
         <UpdateContainer>
           <Form>
             <FormItem>
@@ -19,19 +29,28 @@ const Update = () => {
             </FormItem>
             <FormItem>
               <Label>Username</Label>
-              <Input type="text" placeholder="Signal Fish" />
+              <Input
+                type="text"
+                placeholder={user.userInfo.name}
+                onChange={(e) => setName(e.target.value)}
+              />
             </FormItem>
             <FormItem>
               <Label>Email</Label>
-              <Input type="text" placeholder="signalfish@email.com" />
+              <Input
+                type="text"
+                placeholder={user.userInfo.email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </FormItem>
             <FormItem>
               <Label>Password</Label>
               <Input type="password" />
-              <UpdateButton>Update</UpdateButton>
-              {(1!==2) ? (
-                <Error>Something went wrong!</Error>
-              ) : (
+              <UpdateButton disabled={user.pending} onClick={handleClick}>
+                Update
+              </UpdateButton>
+              {user.error && (<Error>Something went wrong!</Error>)()}
+              {user.pending === false && (
                 <Success>Account has been updated!</Success>
               )}
             </FormItem>
@@ -45,25 +64,13 @@ const Update = () => {
 const Container = styled.div``;
 
 const Wrapper = styled.div`
-  padding: 20px;
+  padding: 0 20px;
 `;
 
 const Title = styled.h3`
   font-size: 24px;
   margin-bottom: 20px;
   font-weight: 400;
-`;
-
-const DeleteButton = styled.button`
-  border: none;
-  padding: 5px;
-  font-size: 12px;
-  background-color: rgb(243, 129, 152);
-  color: white;
-  font-weight: 500;
-  margin-top: 10px;
-  border-radius: 5px;
-  cursor: pointer;
 `;
 
 const UpdateContainer = styled.div`
